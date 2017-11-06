@@ -5,6 +5,7 @@ namespace ResqueBundle\Resque;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ContainerAwareJob
@@ -41,8 +42,9 @@ abstract class ContainerAwareJob extends Job
     protected function getContainer()
     {
         if ($this->kernel === NULL) {
+            $request = Request::createFromGlobals();
             $this->kernel = $this->createKernel();
-            $this->kernel->setRequest();
+            $this->kernel->setRequest($request);
             $this->kernel->boot();
         }
 

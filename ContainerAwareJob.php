@@ -62,8 +62,6 @@ abstract class ContainerAwareJob extends Job
         $file = current($results);
         $class = $file->getBasename('.php');
 
-        require_once $file;
-
         return new $class(
             isset($this->args['kernel.environment']) ? $this->args['kernel.environment'] : 'dev',
             isset($this->args['kernel.debug']) ? $this->args['kernel.debug'] : TRUE
